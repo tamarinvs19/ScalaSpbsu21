@@ -17,7 +17,7 @@ object TheGame {
     var numberList: List[Char] = List()
     while (numberList.length < length) {
       val nextSymbol = alphanumeric.take(1)
-      if (!numberList.contains(nextSymbol) && "0123456789".contains(nextSymbol.head))
+      if (!numberList.contains(nextSymbol))
         numberList = numberList.concat(nextSymbol)
     }
     numberList.mkString("")
@@ -48,17 +48,21 @@ object TheGame {
 
     println("I am ready!")
 
-    @tailrec
     def userGuess(numTries: Int = 1): Unit = {
       print("Enter your guess: ")
       val guess = readLine()
-      val result: GuessResult = TheGame.validate(secret, guess)
-      result match {
-        case Correct(numTries) =>
-          println(s"You win! Number of tries: $numTries.")
-        case Incorrect(bulls, cows) =>
-          println(s"Bulls: $bulls, Cows: $cows. Try again...")
-          userGuess(numTries + 1)
+      try {
+        val result: GuessResult = TheGame.validate(secret, guess)
+        result match {
+          case Correct(numTries) =>
+            println(s"You win! Number of tries: $numTries.")
+          case Incorrect(bulls, cows) =>
+            println(s"Bulls: $bulls, Cows: $cows. Try again...")
+            userGuess(numTries + 1)
+        }
+      } catch {
+        case _ : WrongNumberLengthException => println("Wrong length")
+        case _ : RepeatingDigitsException => println("Repeating digits")
       }
     }
     userGuess()
