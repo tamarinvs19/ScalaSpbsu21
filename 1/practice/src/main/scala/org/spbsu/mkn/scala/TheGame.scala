@@ -48,23 +48,30 @@ object TheGame {
 
     println("I am ready!")
 
-    def userGuess(numTries: Int = 1): Unit = {
-      print("Enter your guess: ")
-      val guess = readLine()
-      try {
-        val result: GuessResult = TheGame.validate(secret, guess)
-        result match {
-          case Correct(numTries) =>
-            println(s"You win! Number of tries: $numTries.")
-          case Incorrect(bulls, cows) =>
-            println(s"Bulls: $bulls, Cows: $cows. Try again...")
-            userGuess(numTries + 1)
-        }
-      } catch {
+    @tailrec
+    def checkInputGuess(): GuessResult = {
+      try
+        TheGame.validate(secret, readLine())
+      catch {
         case _ : WrongNumberLengthException => println("Wrong length")
         case _ : RepeatingDigitsException => println("Repeating digits")
       }
+      checkInputGuess()
     }
+
+    @tailrec
+    def userGuess(numTries: Int = 1): Unit = {
+      print("Enter your guess: ")
+      val result: GuessResult = checkInputGuess()
+      result match {
+        case Correct(numTries) =>
+          println(s"You win! Number of tries: $numTries.")
+        case Incorrect(bulls, cows) =>
+          println(s"Bulls: $bulls, Cows: $cows. Try again...")
+          userGuess(numTries + 1)
+      }
+    }
+
     userGuess()
   }
 }
