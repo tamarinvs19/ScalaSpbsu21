@@ -50,18 +50,21 @@ object TheGame {
 
     @tailrec
     def checkInputGuess(): GuessResult = {
-      try
+      try {
+        print("Enter your guess: ")
         TheGame.validate(secret, readLine())
-      catch {
-        case _ : WrongNumberLengthException => println("Wrong length")
-        case _ : RepeatingDigitsException => println("Repeating digits")
+      } catch {
+        case _ : WrongNumberLengthException =>
+          println("Wrong length")
+          checkInputGuess()
+        case _ : RepeatingDigitsException =>
+          println("Repeating digits")
+          checkInputGuess()
       }
-      checkInputGuess()
     }
 
     @tailrec
     def userGuess(numTries: Int = 1): Unit = {
-      print("Enter your guess: ")
       val result: GuessResult = checkInputGuess()
       result match {
         case Correct(numTries) =>
