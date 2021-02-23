@@ -16,8 +16,17 @@ sealed trait IntList {
 case object IntNil extends IntList {
   def head: Int = undef
   def tail: IntList = undef
-  def drop(n: Int): IntList = undef
-  def take(n: Int): IntList = undef
+
+  def drop(n: Int): IntList = n match {
+    case 0 => this
+    case _ => undef
+  }
+
+  def take(n: Int): IntList = n match {
+    case 0 => this
+    case _ => undef
+  }
+
   def map(f: Int => Int): IntList = IntNil
   def ::(elem: Int): IntList = IntCons(elem, this)
   def foldLeft(function: Int => Int => Int)(init: Int): Int = init
@@ -38,7 +47,7 @@ case class IntCons(head: Int, tail: IntList) extends IntList {
 
   def ::(elem: Int): IntList = IntCons(elem, this)
 
-  def foldLeft(function: Int => Int => Int)(init: Int): Int = this.tail.foldLeft(function)(function(init)(head))
+  def foldLeft(function: Int => Int => Int)(init: Int): Int = tail.foldLeft(function)(function(head)(init))
 }
 
 object IntList {
