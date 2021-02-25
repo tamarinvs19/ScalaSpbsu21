@@ -43,10 +43,4 @@ class MyGenericListTest extends AnyFunSuite {
     assert(size(fromSeq(Seq(1,2,3))) == 3)
   }
 
-//  test("sum") {
-//    assertThrows[UnsupportedOperationException](sum(MyNil))
-//    assert(sum(fromSeq(Seq(1,2,3))) == 6)
-//    assert(sum(fromSeq(Seq(1))) == 1)
-//  }
-
 }
