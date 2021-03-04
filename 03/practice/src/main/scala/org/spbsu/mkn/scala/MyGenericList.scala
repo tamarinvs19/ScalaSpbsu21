@@ -44,9 +44,10 @@ case class MyCons[T](head: T, tail: MyGenericList[T]) extends MyGenericList[T] {
 
 object MyGenericList {
   def undef: Nothing = throw new UnsupportedOperationException("operation is undefined")
+  def empty[T]: MyGenericList[T] = MyNil
 
   def fromSeq[T](seq: Seq[T]): MyGenericList[T] =
-    seq.foldRight(MyNil: MyGenericList[T])((head: T, tail: MyGenericList[T]) => head :: tail)
+    seq.foldRight(MyGenericList.empty[T])((head: T, tail: MyGenericList[T]) => head :: tail)
 
   def size[T](myGenericList: MyGenericList[T]): Int = myGenericList.foldLeft[Int](0)(value => _ => value + 1)
 
