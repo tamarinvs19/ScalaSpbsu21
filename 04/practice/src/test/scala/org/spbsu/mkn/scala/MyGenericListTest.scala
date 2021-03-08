@@ -72,16 +72,6 @@ class MyGenericListTest extends AnyFunSuite {
       == fromSeq(Seq(-10, 0, 1, 2, 3, 3, 4, 239, 1000, 100500)))
   }
 
-  test("sort IntList abs") {
-    import org.spbsu.mkn.scala.Comparator.IntCompAbs
-
-    assert(sort(MyNil) == MyNil)
-    assert(sort(fromSeq(Seq(3, 1000, 2))) == fromSeq(Seq(2, 3, 1000)))
-    assert(sort(fromSeq(Seq(1))) == fromSeq(Seq(1)))
-    assert(sort(fromSeq(Seq(3, 1000, 2, 1, 239, 100500, 0, -10, 3, 4)))
-      == fromSeq(Seq(0, 1, 2, 3, 3, 4, -10, 239, 1000, 100500)))
-  }
-
   test("sort List of IntList") {
     import org.spbsu.mkn.scala.Comparator.{IntComp, MyGenericList}
 

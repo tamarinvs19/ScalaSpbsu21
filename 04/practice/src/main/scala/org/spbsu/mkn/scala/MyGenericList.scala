@@ -121,9 +121,6 @@ object Comparator {
   implicit def IntComp: Comparator[Int] =
     (int1: Int, int2: Int) => int1 compare int2
 
-  implicit def IntCompAbs: Comparator[Int] =
-    (int1: Int, int2: Int) => abs(int1) compare abs(int2)
-
   implicit def StringComp: Comparator[String] =
     (str1: String, str2: String) => str1 compare str2
 }
