@@ -93,13 +93,13 @@ trait Monoid[T] {
 }
 
 object Monoid {
-  implicit final def IntMonoid: Monoid[Int] =
+  implicit final val IntMonoid: Monoid[Int] =
     new Monoid[Int] {
       override final def mappend(int1: Int, int2: Int): Int = int1 + int2
       override final val mempty: Int = 0
     }
 
-  implicit final def StringMonoid: Monoid[String] =
+  implicit final val StringMonoid: Monoid[String] =
     new Monoid[String] {
       override final def mappend(str1: String, str2: String): String = str1 + str2
       override final val mempty: String = ""
